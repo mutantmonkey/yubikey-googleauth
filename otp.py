@@ -14,7 +14,6 @@ import time
 
 PASS_CODE_LENGTH = 6
 INTERVAL = 30
-ADJACENT_INTERVALS = 1
 PIN_MODULO = 10**PASS_CODE_LENGTH
 
 def get_timestamp():
@@ -36,7 +35,6 @@ def challenge_yubikey():
     resp = subprocess.check_output(['ykchalresp', '-2x', chal])
     resp = resp.strip()
     resp = binascii.unhexlify(resp)
-
     print(make_pin(resp))
 
 if __name__ == "__main__":
