@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+################################################################################
+# get_secret.py - Convert base32-encoded Google secret to hex
+#
+# author: mutantmonkey <mutantmonkey@mutantmonkey.in>
+################################################################################
 
 import base64
 import binascii

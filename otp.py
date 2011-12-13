@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 ################################################################################
-# google.py - google authenticator via yubikey
+# otp.py - Google OTP generator with secret stored on Yubikey
 #
 # author: mutantmonkey <mutantmonkey@mutantmonkey.in>
 ################################################################################
 
-import base64
 import binascii
 import hashlib
 import hmac
@@ -21,13 +20,6 @@ PIN_MODULO = 10**PASS_CODE_LENGTH
 def get_timestamp():
     return int(time.time() / INTERVAL)
 
-def decode_secret(secret):
-    secret = secret.replace(' ', '')
-    secret = secret.upper()
-    secret = secret.encode('ascii')
-    secret = base64.b32decode(secret)
-    return secret
-
 def make_pin(resp):
     offset = resp[-1] & 0x0F
     resp = resp[offset:offset + 4]
@@ -35,14 +27,6 @@ def make_pin(resp):
     pin &= 0x7FFFFFFF
     pin %= PIN_MODULO
     return '{0:06d}'.format(pin)
-
-def generate_challenge(secret):
-    tm = get_timestamp()
-    tm = struct.pack('>q', tm)
-
-    mac = hmac.new(secret, tm, hashlib.sha1)
-    resp = mac.digest()
-    print(make_pin(resp))
 
 def challenge_yubikey():
     tm = get_timestamp()
@@ -56,7 +40,4 @@ def challenge_yubikey():
     print(make_pin(resp))
 
 if __name__ == "__main__":
-    #secret = decode_secret(secret)
-    #print(binascii.hexlify(secret))
-    #generate_challenge(secret)
     challenge_yubikey()

@@ -26,6 +26,6 @@ Usage
    output a result in hex.
 4. Program that secret into your Yubikey as a HMAC-SHA1 challenge-response key.
    I had to use the GUI tool available from Yubico.
-5. Whenever you are prompted for a one-time password from google, just run
-   `google.py` and the output will be a one-time password usable for up to one
+5. Whenever you are prompted for a one-time password from Google, just run
+   `otp.py` and the output will be a one-time password usable for up to one
    minute 30 seconds.
