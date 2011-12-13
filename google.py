@@ -34,7 +34,7 @@ def make_pin(resp):
     pin = struct.unpack('>L', resp)[0]
     pin &= 0x7FFFFFFF
     pin %= PIN_MODULO
-    return pin
+    return '{0:06d}'.format(pin)
 
 def generate_challenge(secret):
     tm = get_timestamp()
@@ -42,8 +42,7 @@ def generate_challenge(secret):
 
     mac = hmac.new(secret, tm, hashlib.sha1)
     resp = mac.digest()
-    pin = make_pin(resp)
-    print('{0:06d}'.format(pin))
+    print(make_pin(resp))
 
 def challenge_yubikey():
     tm = get_timestamp()
@@ -54,8 +53,7 @@ def challenge_yubikey():
     resp = resp.strip()
     resp = binascii.unhexlify(resp)
 
-    pin = make_pin(resp)
-    print('{0:06d}'.format(pin))
+    print(make_pin(resp))
 
 if __name__ == "__main__":
     #secret = decode_secret(secret)
